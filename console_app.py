@@ -1,7 +1,9 @@
-from modules import group, student, subject, teacher
-import re
+from os import path
+from api.main_menu import main_menu
+from api.check_db import check_db
 
-def main():
-    print('Accounting system for Students and Teachers')
+BASE_DIR = path.dirname(path.abspath(__file__))
+db_path = path.join(BASE_DIR, 'db.sqlite3')
 
-main()
+check_db(db_path)
+main_menu(db_path)
