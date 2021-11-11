@@ -8,58 +8,80 @@ def create_db(db_path) -> None:
     
     # Create students table
     db_cursor.execute(
-        """CREATE TABLE students (
-	        student_id integer PRIMARY KEY AUTOINCREMENT,
-	        first_name varchar(25),
-	        last_name varchar(25),
-	        email varchar(70) UNIQUE,
-	        date_of_birth DATETIME,
-	        course integer,
-	        group_id integer,
-            FOREIGN KEY (group_id) REFERENCES groups_table (group_id) ON DELETE SET NULL
-        );"""
+        """
+        CREATE TABLE students (
+            student_id    INTEGER      PRIMARY KEY AUTOINCREMENT NOT NULL,
+            first_name    VARCHAR (25) NOT NULL,
+            last_name     VARCHAR (25) NOT NULL,
+            email         VARCHAR (70) UNIQUE NOT NULL,
+            date_of_birth DATETIME     NOT NULL,
+            course        INTEGER      NOT NULL,
+            group_id      INTEGER      NOT NULL,
+            FOREIGN KEY (
+                group_id
+            )
+            REFERENCES groups_table (group_id) ON DELETE NO ACTION
+        );
+        """
     )
 
     # Create groups table
     db_cursor.execute(
-        """CREATE TABLE groups_table (
-	        group_id integer PRIMARY KEY AUTOINCREMENT,
-	        group_num integer,
-            group_email varchar(70) UNIQUE
-        );"""
+        """
+        CREATE TABLE groups_table (
+            group_id    INTEGER      PRIMARY KEY AUTOINCREMENT NOT NULL,
+            group_num   VARCHAR (10) UNIQUE NOT NULL,
+            group_email VARCHAR (70) UNIQUE NOT NULL
+        );
+        """
     )
 
     # Create subject_assessments table
     db_cursor.execute(
-        """CREATE TABLE subject_assessments (
-	        assessment_id integer PRIMARY KEY AUTOINCREMENT,
-	        assessment integer,
-	        student_id integer,
-	        subject_id integer,
-	        date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (student_id) REFERENCES students (student_id) ON DELETE CASCADE,
-            FOREIGN KEY (subject_id) REFERENCES subjects (subject_id) ON DELETE CASCADE
-        );"""
+        """
+        CREATE TABLE subject_assessments (
+            assessment_id INTEGER   PRIMARY KEY AUTOINCREMENT NOT NULL,
+            assessment    INTEGER   NOT NULL,
+            student_id    INTEGER   NOT NULL,
+            subject_id    INTEGER   NOT NULL,
+            date          TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (
+                student_id
+            )
+            REFERENCES students (student_id) ON DELETE CASCADE,
+            FOREIGN KEY (
+                subject_id
+            )
+            REFERENCES subjects (subject_id) ON DELETE CASCADE
+        );
+        """
     )
     
     # Create teachers table
     db_cursor.execute(
-        """CREATE TABLE teachers (
-	        teacher_id integer PRIMARY KEY AUTOINCREMENT,
-	        first_name varchar(25),
-	        last_name varchar(25),
-	        email varchar(70) UNIQUE,
-	        subject_id integer,
-            FOREIGN KEY (subject_id) REFERENCES subjects (subject_id) ON DELETE SET NULL
-        );"""
+        """
+        CREATE TABLE teachers (
+            teacher_id INTEGER      PRIMARY KEY AUTOINCREMENT NOT NULL,
+            first_name VARCHAR (25) NOT NULL,
+            last_name  VARCHAR (25) NOT NULL,
+            email      VARCHAR (70) UNIQUE NOT NULL,
+            subject_id INTEGER      NOT NULL,
+            FOREIGN KEY (
+                subject_id
+            )
+            REFERENCES subjects (subject_id) ON DELETE NO ACTION
+        );
+        """
     )
 
     # Create subjects table
     db_cursor.execute(
-        """CREATE TABLE subjects (
-	        subject_id integer PRIMARY KEY AUTOINCREMENT,
-	        subject_name varchar(100)
-        );"""
+        """
+        CREATE TABLE subjects (
+            subject_id   INTEGER       PRIMARY KEY AUTOINCREMENT NOT NULL,
+            subject_name VARCHAR (100) NOT NULL UNIQUE
+        );
+        """
     )
 
     db_connect.close()
