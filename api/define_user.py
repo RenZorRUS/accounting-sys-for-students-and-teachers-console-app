@@ -18,13 +18,14 @@ def define_user() -> int:
             option = int(input('Enter the number of option: '))
         except ValueError:
             print(
-                'Error: enter the available number of options (1, 2)...')
+                'Error: enter the available number of options (1 - 3)...')
             continue
         else:
             if option in (1, 2):
                 break
             elif option == 3:
                 break
-            print('Error: enter the available number of options (1, 2)...')
+            print('Error: enter the available number of options (1 - 3)...')
             continue
+
     return option

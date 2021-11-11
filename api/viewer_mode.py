@@ -1,7 +1,6 @@
 from .view_list import view_list
 from .screen_clear import screen_clear
 
-
 def viewer_mode(db_path) -> bool:
     """This mode allows you to:
         * View students, teachers or groups list

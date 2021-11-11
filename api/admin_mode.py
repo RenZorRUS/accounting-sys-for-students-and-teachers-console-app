@@ -1,6 +1,4 @@
 import sqlite3
-
-from api.screen_clear import screen_clear
 from .view_list import view_list
 from .add_rows_to import add_rows_to
 from .delete_rows_from import delete_rows_from
